@@ -1,3 +1,10 @@
+
+🛫 Travel App Backend
+
+A RESTful API backend built with Go and Gin for managing users, flights, hotels, visas, bookings, and support tickets. This API serves as the server for a complete travel booking system.
+
+✔️ Includes user authentication, booking logic, admin routes, and trip management.
+
 🚀 Features
 
 User Authentication: Signup & login endpoints
