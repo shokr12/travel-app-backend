@@ -1,6 +1,9 @@
 # Binaries
 *.exe
 *.exe~
+*.dll
+*.so
+*.dylib
 *.out
 *.test
 
@@ -16,3 +19,4 @@ vendor/
 # OS / IDE files
 .DS_Store
 *.swp
+
