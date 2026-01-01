@@ -1,0 +1,18 @@
+# Binaries
+*.exe
+*.exe~
+*.out
+*.test
+
+# Vendor directory (if using Go modules you can ignore this)
+vendor/
+
+# Environment variables
+.env
+
+# Logs
+*.log
+
+# OS / IDE files
+.DS_Store
+*.swp
