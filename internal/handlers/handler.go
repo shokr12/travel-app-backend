@@ -331,3 +331,4 @@ func (uh *UserHandler) GetAllUsers(c *gin.Context) {
 		"total": len(users),
 	})
 }
+

@@ -114,7 +114,7 @@ func (fr *FlightRepo) SortFromLowerToUpper() ([]models.Flight, error) {
 // FindByUser retrieves all flights booked by a specific user
 func (fr *FlightRepo) FindByUser(userId uint) ([]models.Flight, error) {
 	var flights []models.Flight
-	if err := fr.db.Where("userId = ?", userId).Find(&flights).Error; err != nil {
+	if err := fr.db.Where("user_id = ?", userId).Find(&flights).Error; err != nil {
 		return nil, err
 	}
 	return flights, nil

@@ -22,7 +22,6 @@ func NewVisaHandler(visaService *services.VisaService) *VisaHandler {
 }
 
 type CreateVisaRequest struct {
-	UserID         uint   `json:"userId" binding:"required"`
 	VisaType       string `json:"visa_type" binding:"required,min=2,max=50"`
 	Destination    string `json:"destination" binding:"required,min=2,max=100"`
 	TravelDate     string `json:"travel_date" binding:"required"`
@@ -42,6 +41,7 @@ type UpdateVisaRequest struct {
 func (vh *VisaHandler) CreateVisa(c *gin.Context) {
 	var req CreateVisaRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
+		log.Printf("Error binding CreateVisaRequest: %v", err)
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error":   "invalid_input",
 			"message": "Please check your input data",
@@ -51,16 +51,8 @@ func (vh *VisaHandler) CreateVisa(c *gin.Context) {
 	}
 
 	userID := c.GetUint("userId")
-	if req.UserID != userID {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error":   "forbidden",
-			"message": "You can only create visa applications for yourself",
-		})
-		return
-	}
-
 	visa := models.VisaApplication{
-		UserID:         req.UserID,
+		UserID:         uint(userID),
 		VisaType:       req.VisaType,
 		Destination:    req.Destination,
 		TravelDate:     req.TravelDate,

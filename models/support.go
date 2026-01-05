@@ -1,12 +1,12 @@
 package models
 
 type SupportTicket struct {
-    ID        uint `json:"id" gorm:"primaryKey"`
+	ID uint `json:"id" gorm:"primaryKey"`
 
-    UserID    uint
-    User      User `gorm:"foreignKey:UserID"`
+	UserID uint `json:"user_id"`
+	User   User `gorm:"foreignKey:UserID"`
 
-    Subject   string
-    Message   string
-    Status    string // open, in_progress, closed
+	Subject string `json:"subject" binding:"required,min=10,max=2000"`
+	Message string `json:"message" binding:"required,min=10,max=2000"`
+	Status  string `json:"status" binding:"required,oneof=open in_progress resolved closed"`
 }

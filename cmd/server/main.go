@@ -8,11 +8,20 @@ import (
 	"Visa/migration"
 	"log"
 	"time"
+	"Visa/middleware"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
+func GetMe(c *gin.Context) {
+	user, exists := c.Get("user")
+	if !exists {
+		c.JSON(401, gin.H{"error": "unauthorized"})
+		return
+	}
+	c.JSON(200, user)
+}
 
 func main() {
 	migration.Migrate()
@@ -72,12 +81,14 @@ func main() {
 
 	// Protected routes (require authentication)
 	protected := r.Group("/api/v1")
-	protected.Use(handlers.AuthMiddleware())
+	protected.Use(middleware.AuthMiddleware())
 	{
 		// User routes
 		protected.GET("/users/:id", userHandler.GetUserById)
 		protected.PUT("/users/:id", userHandler.UpdateUser)
 		protected.DELETE("/users/:id", userHandler.DeleteUser)
+		protected.GET("/auth/me",GetMe )
+
 
 		// Visa routes
 		protected.POST("/visas", visaHandler.CreateVisa)
@@ -106,7 +117,7 @@ func main() {
 
 	// Admin routes (require admin role)
 	admin := r.Group("/api/v1/admin")
-	admin.Use(handlers.AuthMiddleware(), handlers.AdminMiddleware())
+	admin.Use(middleware.AuthMiddleware(), middleware.AdminMiddleware())
 	{
 		// User management
 		admin.GET("/users", userHandler.GetAllUsers)

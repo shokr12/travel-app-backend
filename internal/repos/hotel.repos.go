@@ -109,7 +109,7 @@ func (hr *HotelRepo) HotelOptions(checked bool) ([]models.Hotel, error) {
 // GetHotelsByUser retrieves all hotels booked by a specific user
 func (hr *HotelRepo) GetHotelsByUser(userId uint) ([]models.Hotel, error) {
 	var hotels []models.Hotel
-	if err := hr.db.Where("userId = ?", userId).Find(&hotels).Error; err != nil {
+	if err := hr.db.Where("user_id = ?", userId).Find(&hotels).Error; err != nil {
 		return nil, err
 	}
 	return hotels, nil

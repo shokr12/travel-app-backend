@@ -78,7 +78,7 @@ func (vr *VisaRepo) FindVisaByNationality(nationality string) ([]models.VisaAppl
 // GetVisaByUserId retrieves all visa applications for a specific user
 func (vr *VisaRepo) GetVisaByUserId(userId uint) ([]models.VisaApplication, error) {
 	var visas []models.VisaApplication
-	if err := vr.db.Where("userId = ?", userId).Find(&visas).Error; err != nil {
+	if err := vr.db.Where("user_id = ?", userId).Find(&visas).Error; err != nil {
 		return nil, err
 	}
 	return visas, nil

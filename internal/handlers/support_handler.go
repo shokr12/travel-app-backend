@@ -22,7 +22,6 @@ func NewSupportHandler(supportService *services.SupportService) *SupportHandler 
 }
 
 type CreateTicketRequest struct {
-	UserID  uint   `json:"userId" binding:"required"`
 	Subject string `json:"subject" binding:"required,min=5,max=200"`
 	Message string `json:"message" binding:"required,min=10,max=2000"`
 }
@@ -46,16 +45,9 @@ func (sh *SupportHandler) CreateTicket(c *gin.Context) {
 	}
 
 	userID := c.GetUint("userId")
-	if req.UserID != userID {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error":   "forbidden",
-			"message": "You can only create tickets for yourself",
-		})
-		return
-	}
 
 	ticket := models.SupportTicket{
-		UserID:  req.UserID,
+		UserID:  uint(userID),
 		Subject: req.Subject,
 		Message: req.Message,
 		Status:  "open",
@@ -120,8 +112,9 @@ func (sh *SupportHandler) GetTicketById(c *gin.Context) {
 
 // GetTicketsByUser retrieves all support tickets for a specific user
 func (sh *SupportHandler) GetTicketsByUser(c *gin.Context) {
+	// 1 Get userId from URL
 	userParam := c.Param("userId")
-	userId, err := strconv.ParseUint(userParam, 10, 64)
+	userIdUint64, err := strconv.ParseUint(userParam, 10, 64)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error":   "invalid_id",
@@ -129,10 +122,21 @@ func (sh *SupportHandler) GetTicketsByUser(c *gin.Context) {
 		})
 		return
 	}
+	userId := uint(userIdUint64)
 
+	// 2 Get current user info from JWT
 	currentUserID := c.GetUint("userId")
+	if currentUserID == 0 {
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"error":   "unauthorized",
+			"message": "User ID not found in JWT",
+		})
+		return
+	}
 	role := c.GetString("role")
-	if role != "admin" && uint(userId) != currentUserID {
+
+	// 3 Permission check
+	if role != "admin" && userId != currentUserID {
 		c.JSON(http.StatusForbidden, gin.H{
 			"error":   "forbidden",
 			"message": "You can only view your own support tickets",
@@ -140,12 +144,31 @@ func (sh *SupportHandler) GetTicketsByUser(c *gin.Context) {
 		return
 	}
 
-	tickets, err := sh.SupportService.GetSupportTicketsByUserId(uint(userId))
+	// 4 Fetch tickets
+	tickets, err := sh.SupportService.GetSupportTicketsByUserId(userId)
 	if err != nil {
 		log.Printf("Error fetching tickets for user %d: %v", userId, err)
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error":   "server_error",
 			"message": "Unable to retrieve support tickets",
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"data":  tickets,
+		"count": len(tickets),
+	})
+}
+
+// GetOpenTickets retrieves all open support tickets
+func (sh *SupportHandler) GetOpenTickets(c *gin.Context) {
+	tickets, err := sh.SupportService.GetOpenTickets()
+	if err != nil {
+		log.Printf("Error fetching open tickets: %v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error":   "server_error",
+			"message": "Unable to retrieve open support tickets",
 		})
 		return
 	}

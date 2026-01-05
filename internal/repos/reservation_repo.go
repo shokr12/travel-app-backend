@@ -51,7 +51,7 @@ func (rr *ReservationRepo) DeleteReservation(id uint) error {
 // GetReservationsByUserId retrieves all reservations for a specific user
 func (rr *ReservationRepo) GetReservationsByUserId(userId uint) ([]models.Reservation, error) {
 	var reservations []models.Reservation
-	if err := rr.db.Where("userId = ?", userId).Find(&reservations).Error; err != nil {
+	if err := rr.db.Where("user_id = ?", userId).Find(&reservations).Error; err != nil {
 		return nil, err
 	}
 	return reservations, nil

@@ -52,7 +52,7 @@ func (sr *SupportRepo) DeleteTicket(id uint) error {
 // Valid statuses: "open", "in_progress", "resolved", "closed"
 func (sr *SupportRepo) FindByStatus(status string) ([]models.SupportTicket, error) {
 	var tickets []models.SupportTicket
-	if err := sr.db.Where("status = ?", status).Find(&tickets).Error; err != nil {
+	if err := sr.db.Preload("User").Where("status = ?", status).Find(&tickets).Error; err != nil {
 		return nil, err
 	}
 	return tickets, nil
@@ -61,7 +61,7 @@ func (sr *SupportRepo) FindByStatus(status string) ([]models.SupportTicket, erro
 // GetTicketsByUserId retrieves all support tickets for a specific user
 func (sr *SupportRepo) GetTicketsByUserId(userId uint) ([]models.SupportTicket, error) {
 	var tickets []models.SupportTicket
-	if err := sr.db.Where("userId = ?", userId).Find(&tickets).Error; err != nil {
+	if err := sr.db.Preload("User").Where("user_id= ?", userId).Find(&tickets).Error; err != nil {
 		return nil, err
 	}
 	return tickets, nil
