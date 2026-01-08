@@ -1,144 +1,128 @@
-🛫 Travel App Backend
+# 🛫 Travel Companion Backend
 
-A RESTful API backend built with Go and Gin for managing users, flights, hotels, visas, bookings, and support tickets. This API serves as the server for a complete travel booking system.
+A robust, high-performance RESTful API built with **Go** and the **Gin** framework. This backend serves as the core engine for a complete travel management system, handling everything from user authentication to flight/hotel bookings and visa processing.
 
-✔️ Includes user authentication, booking logic, admin routes, and trip management.
+---
 
-🚀 Features
+## 🚀 Key Features
 
-User Authentication: Signup & login endpoints
+### 🔐 Security & Identity
 
-Flights: List, filter (by city/date), book, cancel, and user bookings
+- **JWT Authentication**: Secure token-based access for protected resources.
+- **Role-Based Access Control**: Separate flows for Users and Administrators.
+- **CORS Enabled**: Configured for seamless interaction with modern frontend frameworks (React/Vue/etc).
 
-Hotels: List, filter, book, cancel, and user bookings
+### ✈️ Travel Operations
 
-Visas: Create, update, approve/reject (admin), and view per user
+- **Hotels**: Full CRUD for listings, search by city/date, and booking lifecycle management.
+- **Flights**: Real-time listing, filtering by destination or date, and ticketing system.
+- **Visas**: Digital visa application platform with status tracking and admin approval workflows.
 
-Support Tickets: Create, update, delete, and admin view all
+### 🛠️ Support & Management
 
-Admin Routes: Manage users, visas, hotels, and support tickets
+- **Support Tickets**: Integrated helpdesk system for user queries.
+- **Admin Dashboard**: Specialized endpoints for managing users, approving visas, and overseeing support.
+- **Health Monitoring**: Built-in health check endpoint for uptime tracking.
 
-Health check endpoint
+---
 
-📁 Endpoints Overview
-🔐 Authentication
-POST /api/v1/signup
-POST /api/v1/login
+## 🧪 Tech Stack
 
-👤 Users
-GET    /api/v1/users/:id
-PUT    /api/v1/users/:id
-DELETE /api/v1/users/:id
-GET    /api/v1/admin/users
+| Category        | Technology                                  |
+| :-------------- | :------------------------------------------ |
+| **Language**    | [Go (Golang)](https://golang.org/)          |
+| **Framework**   | [Gin Web Framework](https://gin-gonic.com/) |
+| **Database**    | GORM (ORM) with MySQL/PostgreSQL support    |
+| **Auth**        | JWT (JSON Web Tokens)                       |
+| **Environment** | godotenv                                    |
 
-✈️ Flights
-GET  /api/v1/flights
-GET  /api/v1/flights/:id
-GET  /api/v1/flights/city/:city
-GET  /api/v1/flights/date/:date
-POST /api/v1/flights/book
-POST /api/v1/flights/cancel
-GET  /api/v1/flights/user/:userId
+---
 
-🏨 Hotels
-GET  /api/v1/hotels
-GET  /api/v1/hotels/:id
-GET  /api/v1/hotels/city/:city
-GET  /api/v1/hotels/checkin/:date
-GET  /api/v1/hotels/checkout/:date
-POST /api/v1/hotels/book
-POST /api/v1/hotels/cancel
-GET  /api/v1/hotels/user/:userId
+## 📂 Project Structure
 
-🛂 Visas
-GET  /api/v1/visas
-GET  /api/v1/visas/:id
-GET  /api/v1/visas/user/:userId
-POST /api/v1/visas
-PUT  /api/v1/visas/:id
-DELETE /api/v1/visas/:id
+```text
+backend/
+├── cmd/
+│   └── server/          # Application entry point (main.go)
+├── internal/
+│   ├── handlers/        # HTTP Request handling logic
+│   ├── services/        # Core business logic layer
+│   └── repos/           # Database abstractions (Repository pattern)
+├── middleware/          # Auth and custom Gin middlewares
+├── migration/           # Database schema migrations
+├── models/              # GORM data models
+├── pkg/                 # Shared utilities and helpers
+├── config/              # Database & App configurations
+└── .env                 # Environment variables (not tracked)
+```
 
-Admin Visa Management
-GET  /api/v1/admin/visas
-GET  /api/v1/admin/visas/approved
-GET  /api/v1/admin/visas/pending
-GET  /api/v1/admin/visas/rejected
-POST /api/v1/admin/visas/:id/approve
-POST /api/v1/admin/visas/:id/reject
+---
 
-🆘 Support
-POST   /api/v1/support
-GET    /api/v1/support/:id
-GET    /api/v1/support/user/:userId
-PUT    /api/v1/support/:id
-DELETE /api/v1/support/:id
-GET    /api/v1/admin/support
+## 🛠️ Getting Started
 
-🩺 Health Check
-GET /health
+### 1. Prerequisites
 
-🧠 Tech Stack
-Component	Technology
-Backend	Go (Golang)
-Framework	Gin Web Framework
-Auth	JWT Tokens
-Routing	REST API
-Database	(Configurable — e.g., PostgreSQL/MySQL)*
+- Go 1.25+ installed.
+- A running database (configured via `.env`).
 
-* Database driver depends on your setup and environment variables.
+### 2. Installation
 
-⚙️ Setup & Development
-1. Install Dependencies
+```bash
+# Clone the repository
+git clone <your-repo-url>
+cd backend
+
+# Install dependencies
 go mod tidy
+```
 
-2. Set Environment Variables
+### 3. Configuration
 
-Create a .env:
+Create a `.env` file in the root directory:
 
+```env
 PORT=8080
 DB_HOST=localhost
-DB_USER=your_db_user
-DB_PASSWORD=your_db_password
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=yourpassword
 DB_NAME=travel_db
-JWT_SECRET=your_jwt_secret
+JWT_SECRET=your_super_secret_key
+```
 
-3. Run the Server
-go run main.go
+### 4. Running the Server
 
+```bash
+# Start with live reloading (if Air is installed)
+air
 
-Server will run on:
+# OR standard run
+go run cmd/server/main.go
+```
 
-http://localhost:8080
+---
 
-🧪 Testing
+## 📡 API Endpoints (Quick Reference)
 
-Use API tools like Postman or Insomnia to test endpoints.
-Send authenticated requests using the JWT token from the login endpoint in headers:
+### 👤 Authentication
 
-Authorization: Bearer <token>
+- `POST /api/v1/signup` - Register a new account
+- `POST /api/v1/login` - Authenticate and receive JWT
 
-📦 Project Structure
-/internal
-  /handlers      → Route handlers
-  /models        → Data models
-  /middlewares   → Auth / middleware logic
-  /db            → Database connection & config
-/cmd             → Entry point
-/main.go         → Start the server
+### 🏨 Hotels & ✈️ Flights
 
-📝 Contribution
+- `GET /api/v1/hotels` - List all hotels
+- `POST /api/v1/hotels/book` - Reserve a room (Auth required)
+- `GET /api/v1/flights` - Search available flights
+- `POST /api/v1/flights/book` - Book a flight (Auth required)
 
-You’re welcome to contribute!
-Steps:
+### 🛂 Visa Management
 
-Fork this repo
+- `POST /api/v1/visas` - Submit a visa application
+- `GET /api/v1/admin/visas/pending` - Review pending applications (Admin only)
 
-Create a new branch
+---
 
-Make your changes
+## 📄 License
 
-Submit a pull request
-
-📄 License
-
-Add your license details here (e.g., MIT, GPL, etc.)
+This project is licensed under the MIT License - see the LICENSE file for details.
