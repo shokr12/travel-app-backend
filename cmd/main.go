@@ -48,7 +48,7 @@ func main() {
 
 	// CORS configuration
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:5173", "https://yourdomain.com", "http://localhost:8080", "http://localhost:8081"},
+		AllowOrigins:     []string{"http://localhost:5173", "http://localhost:8080", "http://localhost:8081", "https://travel-app-front.netlify.app/"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},
@@ -154,6 +154,6 @@ func main() {
 	addr := "0.0.0.0:" + port
 	if err := r.Run(addr); err != nil {
 		log.Fatal("Failed to start server:", err)
-	}	
+	}
 
 }

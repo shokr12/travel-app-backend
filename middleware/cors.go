@@ -14,6 +14,8 @@ func CorsMiddleware() gin.HandlerFunc {
 			"https://yourdomain.com",
 			"http://localhost:8080",
 			"http://localhost:8081",
+			"https://travel-app-front.netlify.app/",
+			
 		},
 		AllowMethods: []string{
 			"GET", "POST", "PUT", "DELETE", "OPTIONS",
