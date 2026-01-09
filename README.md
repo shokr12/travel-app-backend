@@ -52,20 +52,30 @@ This project demonstrates how to design and build a scalable backend system that
 ## 📂 Project Structure
 
 backend/
+
 ├── cmd/server/ # Application entry point
+
 ├── internal/
+
 │ ├── handlers/ # HTTP handlers
+
 │ ├── services/ # Business logic
+
 │ └── repos/ # Repository layer
+
 ├── middleware/ # Auth & custom middlewares
+
 ├── migration/ # Database migrations
+
 ├── models/ # GORM models
+
 ├── pkg/ # Shared utilities
+
 ├── config/ # App configuration
+
 └── .env # Environment variables
 
-yaml
-Copy code
+
 
 ---
 
@@ -85,7 +95,7 @@ Configuration
 Create a .env file:
 
 env
-Copy code
+
 PORT=8080
 DB_HOST=localhost
 DB_PORT=3306
@@ -95,12 +105,12 @@ DB_NAME=travel_db
 JWT_SECRET=your_super_secret_key
 Run the Server
 bash
-Copy code
+ 
 go run cmd/server/main.go
 Server runs at:
 
 arduino
-Copy code
+ 
 http://localhost:8080
 📡 API Endpoints (Quick Reference)
 👤 Authentication
