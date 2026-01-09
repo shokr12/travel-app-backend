@@ -5,15 +5,17 @@ import (
 	"Visa/internal/handlers"
 	"Visa/internal/repos"
 	"Visa/internal/services"
+	"Visa/middleware"
 	"Visa/migration"
 	"log"
+	"os"
 	"time"
-	"Visa/middleware"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
+
 func GetMe(c *gin.Context) {
 	user, exists := c.Get("user")
 	if !exists {
@@ -87,8 +89,7 @@ func main() {
 		protected.GET("/users/:id", userHandler.GetUserById)
 		protected.PUT("/users/:id", userHandler.UpdateUser)
 		protected.DELETE("/users/:id", userHandler.DeleteUser)
-		protected.GET("/auth/me",GetMe )
-
+		protected.GET("/auth/me", GetMe)
 
 		// Visa routes
 		protected.POST("/visas", visaHandler.CreateVisa)
@@ -146,9 +147,13 @@ func main() {
 			"time":   time.Now(),
 		})
 	})
-
-	log.Println("Server starting on :8080")
-	if err := r.Run(":8080"); err != nil {
-		log.Fatal("Failed to start server:", err)
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
 	}
+	addr := "0.0.0.0:" + port
+	if err := r.Run(addr); err != nil {
+		log.Fatal("Failed to start server:", err)
+	}	
+
 }
