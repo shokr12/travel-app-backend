@@ -55,18 +55,26 @@ This project demonstrates how to design and build a scalable backend system that
 
 backend/
 ├── cmd/server/ # Application entry point
-├── internal/
-│ ├── handlers/ # HTTP handlers
-│ ├── services/ # Business logic
-│ └── repos/ # Repository layer
-├── middleware/ # Auth & custom middlewares
-├── migration/ # Database migrations
-├── models/ # GORM models
-├── pkg/ # Shared utilities
-├── config/ # App configuration
-└── .env # Environment variables
 
-yaml
+├── internal/
+
+│ ├── handlers/ # HTTP handlers
+
+│ ├── services/ # Business logic
+
+│ └── repos/ # Repository layer
+
+├── middleware/ # Auth & custom middlewares
+
+├── migration/ # Database migrations
+
+├── models/ # GORM models
+
+├── pkg/ # Shared utilities
+
+├── config/ # App configuration
+
+└── .env # Environment variables
 
 
 ---
