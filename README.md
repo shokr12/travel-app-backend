@@ -3,6 +3,8 @@
 A production-ready RESTful API built with Go and the Gin framework.  
 This backend powers a complete travel management platform, handling authentication, bookings, visa workflows, and admin operations.
 
+---
+
 ## 🎯 What This Project Solves
 
 Travel platforms require secure authentication, complex booking workflows, and admin moderation.  
@@ -52,29 +54,19 @@ This project demonstrates how to design and build a scalable backend system that
 ## 📂 Project Structure
 
 backend/
-
 ├── cmd/server/ # Application entry point
-
 ├── internal/
-
 │ ├── handlers/ # HTTP handlers
-
 │ ├── services/ # Business logic
-
 │ └── repos/ # Repository layer
-
 ├── middleware/ # Auth & custom middlewares
-
 ├── migration/ # Database migrations
-
 ├── models/ # GORM models
-
 ├── pkg/ # Shared utilities
-
 ├── config/ # App configuration
-
 └── .env # Environment variables
 
+yaml
 
 
 ---
@@ -92,7 +84,7 @@ git clone https://github.com/shokr12/travel-app-backend.git
 cd backend
 go mod tidy
 Configuration
-Create a .env file:
+Create a .env file in the project root:
 
 env
 
@@ -105,12 +97,12 @@ DB_NAME=travel_db
 JWT_SECRET=your_super_secret_key
 Run the Server
 bash
- 
+
 go run cmd/server/main.go
-Server runs at:
+Server will start at:
 
 arduino
- 
+
 http://localhost:8080
 📡 API Endpoints (Quick Reference)
 👤 Authentication
