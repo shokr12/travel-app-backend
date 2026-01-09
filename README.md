@@ -1,86 +1,101 @@
 # 🛫 Travel Companion Backend
 
-A robust, high-performance RESTful API built with **Go** and the **Gin** framework. This backend serves as the core engine for a complete travel management system, handling everything from user authentication to flight/hotel bookings and visa processing.
+A production-ready RESTful API built with Go and the Gin framework.  
+This backend powers a complete travel management platform, handling authentication, bookings, visa workflows, and admin operations.
+
+---
+
+## 🎯 What This Project Solves
+
+Travel platforms require secure authentication, complex booking workflows, and admin moderation.  
+This project demonstrates how to design and build a scalable backend system that supports real-world travel operations.
 
 ---
 
 ## 🚀 Key Features
 
 ### 🔐 Security & Identity
-
-- **JWT Authentication**: Secure token-based access for protected resources.
-- **Role-Based Access Control**: Separate flows for Users and Administrators.
-- **CORS Enabled**: Configured for seamless interaction with modern frontend frameworks (React/Vue/etc).
+- JWT-based authentication
+- Role-Based Access Control (User / Admin)
+- Secure middleware-protected routes
+- CORS enabled for frontend integration
 
 ### ✈️ Travel Operations
-
-- **Hotels**: Full CRUD for listings, search by city/date, and booking lifecycle management.
-- **Flights**: Real-time listing, filtering by destination or date, and ticketing system.
-- **Visas**: Digital visa application platform with status tracking and admin approval workflows.
+- **Hotels**
+  - CRUD operations
+  - Search by city and date
+  - Booking lifecycle management
+- **Flights**
+  - Flight listing and filtering
+  - Ticket booking system
+- **Visas**
+  - Digital visa application submission
+  - Status tracking and admin approval workflow
 
 ### 🛠️ Support & Management
-
-- **Support Tickets**: Integrated helpdesk system for user queries.
-- **Admin Dashboard**: Specialized endpoints for managing users, approving visas, and overseeing support.
-- **Health Monitoring**: Built-in health check endpoint for uptime tracking.
+- Support ticket system for user issues
+- Admin endpoints for user and visa management
+- Health check endpoint for monitoring uptime
 
 ---
 
 ## 🧪 Tech Stack
 
-| Category        | Technology                                  |
-| :-------------- | :------------------------------------------ |
-| **Language**    | [Go (Golang)](https://golang.org/)          |
-| **Framework**   | [Gin Web Framework](https://gin-gonic.com/) |
-| **Database**    | GORM (ORM) with MySQL/PostgreSQL support    |
-| **Auth**        | JWT (JSON Web Tokens)                       |
-| **Environment** | godotenv                                    |
+| Category | Technology |
+|-------|-----------|
+| Language | Go (Golang) |
+| Framework | Gin Web Framework |
+| Database | GORM (MySQL / PostgreSQL) |
+| Authentication | JWT |
+| Configuration | godotenv |
 
 ---
 
 ## 📂 Project Structure
 
-```text
 backend/
-├── cmd/
-│   └── server/          # Application entry point (main.go)
+├── cmd/server/ # Application entry point
+
 ├── internal/
-│   ├── handlers/        # HTTP Request handling logic
-│   ├── services/        # Core business logic layer
-│   └── repos/           # Database abstractions (Repository pattern)
-├── middleware/          # Auth and custom Gin middlewares
-├── migration/           # Database schema migrations
-├── models/              # GORM data models
-├── pkg/                 # Shared utilities and helpers
-├── config/              # Database & App configurations
-└── .env                 # Environment variables (not tracked)
-```
+
+│ ├── handlers/ # HTTP handlers
+
+│ ├── services/ # Business logic
+
+│ └── repos/ # Repository layer
+
+├── middleware/ # Auth & custom middlewares
+
+├── migration/ # Database migrations
+
+├── models/ # GORM models
+
+├── pkg/ # Shared utilities
+
+├── config/ # App configuration
+
+└── .env # Environment variables
+
 
 ---
 
 ## 🛠️ Getting Started
 
-### 1. Prerequisites
+### Prerequisites
+- Go 1.25+
+- MySQL or PostgreSQL database
 
-- Go 1.25+ installed.
-- A running database (configured via `.env`).
-
-### 2. Installation
+### Installation
 
 ```bash
-# Clone the repository
-git clone <your-repo-url>
+git clone https://github.com/shokr12/travel-app-backend.git
 cd backend
-
-# Install dependencies
 go mod tidy
-```
+Configuration
+Create a .env file in the project root:
 
-### 3. Configuration
+env
 
-Create a `.env` file in the root directory:
-
-```env
 PORT=8080
 DB_HOST=localhost
 DB_PORT=3306
@@ -88,41 +103,49 @@ DB_USER=root
 DB_PASSWORD=yourpassword
 DB_NAME=travel_db
 JWT_SECRET=your_super_secret_key
-```
+Run the Server
+bash
 
-### 4. Running the Server
-
-```bash
-# Start with live reloading (if Air is installed)
-air
-
-# OR standard run
 go run cmd/server/main.go
-```
+Server will start at:
 
----
+arduino
 
-## 📡 API Endpoints (Quick Reference)
+http://localhost:8080
+📡 API Endpoints (Quick Reference)
+👤 Authentication
+POST /api/v1/signup – Register a new user
 
-### 👤 Authentication
+POST /api/v1/login – Login and receive JWT
 
-- `POST /api/v1/signup` - Register a new account
-- `POST /api/v1/login` - Authenticate and receive JWT
+🏨 Hotels & ✈️ Flights
+GET /api/v1/hotels – List hotels
 
-### 🏨 Hotels & ✈️ Flights
+POST /api/v1/hotels/book – Book a hotel (Auth required)
 
-- `GET /api/v1/hotels` - List all hotels
-- `POST /api/v1/hotels/book` - Reserve a room (Auth required)
-- `GET /api/v1/flights` - Search available flights
-- `POST /api/v1/flights/book` - Book a flight (Auth required)
+GET /api/v1/flights – Search flights
 
-### 🛂 Visa Management
+POST /api/v1/flights/book – Book flight (Auth required)
 
-- `POST /api/v1/visas` - Submit a visa application
-- `GET /api/v1/admin/visas/pending` - Review pending applications (Admin only)
+🛂 Visa Management
+POST /api/v1/visas – Submit visa application
 
----
+GET /api/v1/admin/visas/pending – Review pending visas (Admin)
 
-## 📄 License
+📈 What This Project Demonstrates
+Designing REST APIs with Go and Gin
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+Secure authentication & RBAC
+
+Booking and approval workflows
+
+Clean architecture and separation of concerns
+
+Database modeling and migrations
+
+👤 Author
+Mahmoud Shokr
+GitHub: https://github.com/shokr12
+LinkedIn: https://www.linkedin.com/in/mahmoud-shokr12
+
+⭐ If you find this project useful, feel free to star the repository.
