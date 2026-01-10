@@ -46,7 +46,7 @@ func main() {
 
 	// CORS configuration
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"https://travel-app-backend-production-1aeb.up.railway.app"},
+		AllowOrigins:     []string{"https://travel-app-backend-production-1aeb.up.railway.app", "https://travel-app-frontend-beta.vercel.app"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},

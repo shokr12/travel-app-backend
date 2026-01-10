@@ -13,8 +13,8 @@ func CorsMiddleware() gin.HandlerFunc {
 			"http://localhost:5173",
 			"http://localhost:8080",
 			"http://localhost:8081",
+			"https://travel-app-frontend-beta.vercel.app",
 			"https://travel-app-backend-production-1aeb.up.railway.app",
-
 		},
 		AllowMethods: []string{
 			"GET", "POST", "PUT", "DELETE", "OPTIONS",
