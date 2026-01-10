@@ -13,7 +13,6 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 )
 
 func GetMe(c *gin.Context) {
@@ -26,9 +25,8 @@ func GetMe(c *gin.Context) {
 }
 
 func main() {
-	migration.Migrate()
 	config.ConnectToDB()
-	godotenv.Load()
+	migration.Migrate()
 	// Initialize services
 	userService := services.NewUserService(repos.NewUserRepo(config.Db))
 	visaService := services.NewVisaService(repos.NewVisaRepo(config.Db))
