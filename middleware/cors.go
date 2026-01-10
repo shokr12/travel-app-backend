@@ -11,11 +11,10 @@ func CorsMiddleware() gin.HandlerFunc {
 	return cors.New(cors.Config{
 		AllowOrigins: []string{
 			"http://localhost:5173",
-			"https://yourdomain.com",
 			"http://localhost:8080",
 			"http://localhost:8081",
-			"https://travel-app-front.netlify.app",
-			"https://travel-visa-app1.netlify.app",
+			"https://travel-app-backend-production-1aeb.up.railway.app",
+
 		},
 		AllowMethods: []string{
 			"GET", "POST", "PUT", "DELETE", "OPTIONS",
